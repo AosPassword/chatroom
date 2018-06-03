@@ -1,0 +1,32 @@
+spring:
+  datasource:
+      username: root
+      password: asdasd123123
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/firstbase
+      schema:
+        - classpath:sql/users.sql
+        - classpath:sql/messages.sql
+        - classpath:sql/users_relation.sql
+#    private long missTime;
+#    private String showAddRequestKeyWord;
+#    private String showFriendsKeyWord;
+#    private String noAcceptUserKeyWord;
+#    private String acceptUserKeyWord;
+#    private String historyKeyWord;
+#    private String addUserKeyWord;
+#    private String helpKeyWord;
+#    private String helpInfo;
+handle-been:
+  historyKeyWord: history
+  addUserKeyWord: ->adduser
+  helpKeyWord:  help
+  helpInfo: "1)上面的框填其他人的昵称，下面的框填发送的内容，则可以给对方发送信息<br/>2)上面的框填其他人的昵称，下面的框填${handle-been.addUserKeyWord},则可以给对方发送加好友请求<br/>3)上面的框不填，下面的框直接填${handle-been.historyKeyWord}，则可以查看自己的历史记录<br/>4)上面的框不填，下面的框直接填${handle-been.helpKeyWord}，则可以查看本帮助"
+  noAcceptUserKeyWord: refuse
+  acceptUserKeyWord: receive
+  missTime: 20000
+  showFriendsKeyWord: showFriends
+  showAddRequestKeyWord: showRequest
+
+
+

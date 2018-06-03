@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta content="text/html;charset=UTF-8"/>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/chatroom}" method="get">
+    <input type="submit" value="转跳"/>
+</form>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" class="btn btn-primary" value="注销"/>
+</form>
+
+
+</body>
+</html>

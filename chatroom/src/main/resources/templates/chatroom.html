@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>聊天室</title>
+    <script th:src="@{js/sockjs.min.js}"></script>
+    <script th:src="@{js/stomp.js}"></script>
+    <script th:src="@{js/jquery-3.1.1.js}"></script>
+</head>
+<body>
+<p>聊天室</p>
+<form id="sangForm">
+    发给谁：
+    <br/>
+    <textarea rows="1" cols="20" name="receive"></textarea>
+    <br/>
+    发送内容：
+    <br/>
+    <textarea rows="4" cols="60" name="text"></textarea>
+    <br/>
+    <input type="submit" value="发送"/>
+</form>
+<p>直接在输入框中输入help可获得帮助</p>
+<script th:inline="javascript">
+    $("#sangForm").submit(function (e) {
+        e.preventDefault();
+        var textArea = $("#sangForm").find('textarea[name="text"]');
+        var text = textArea.val();
+        var receiveArea=$("#sangForm").find('textarea[name="receive"]');
+        var receive=receiveArea.val();
+        var json={  "info": text,
+                    "receive_user_name": receive};
+        var jsonstr=JSON.stringify(json);
+        sendSpittle(jsonstr);
+        textArea.val('');
+    });
+    var sock = new SockJS("/endpointChat");
+    var stomp = Stomp.over(sock);
+    stomp.connect('guest','guest',function (frame) {
+        stomp.subscribe("/user/queue/notifications", handleNotification);
+    });
+    function handleNotification(message) {
+        $("#output").append("<b>"+message.body+"</b><br/>")
+    }
+    function sendSpittle(text) {
+        stomp.send("/chat", {}, text);
+        //向/chat发送信息
+    }
+    $("#stop").click(function () {
+        sock.close();
+    });
+</script>
+<div id="output"></div>
+</body>
+</html>
